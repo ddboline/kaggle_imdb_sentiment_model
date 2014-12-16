@@ -16,4 +16,4 @@ def average_vectors():
 
 
 if __name__ == '__main__':
-    average_vector()
+    average_vectors()
