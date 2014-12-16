@@ -10,9 +10,18 @@ import itertools
 
 from memory_profiler import profile
 
+
+# Load the punkt tokenizer
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+
 def clean_review_function(review):
-    list_of_words = KaggleWord2VecUtility.review_to_wordlist(review, remove_stopwords=False)
-    return ' '.join(list_of_words)
+    list_of_sentences = KaggleWord2VecUtility.review_to_sentences( review , tokenizer , remove_stopwords=False )
+    
+    def clean_review_sentence(revsent):
+        list_of_words = KaggleWord2VecUtility.review_to_wordlist(revsent, remove_stopwords=False)
+        return ' '.join(list_of_words)
+    
+    return map( clean_review_sentence , list_of_sentences )
 
 @profile
 def average_vectors():
@@ -22,6 +31,8 @@ def average_vectors():
 
     print [ x['review'].size for x in [ labeledtrain_data , unlabeledtrain_data, test_data] ]
 
+    sentences = map( clean_review_function , itertools.chain( labeledtrain_data['review'], unlabeledtrain_data['review'] ) )
+    
 
 if __name__ == '__main__':
     average_vectors()
