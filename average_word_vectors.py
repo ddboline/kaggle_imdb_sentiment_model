@@ -24,7 +24,8 @@ def clean_review_function(review):
         list_of_words = KaggleWord2VecUtility.review_to_wordlist(revsent, remove_stopwords=False)
         return ' '.join(list_of_words)
     
-    return map( clean_review_sentence , list_of_sentences )
+    new_list_of_sentences = map( clean_review_sentence , list_of_sentences )
+    return new_list_of_sentences
 
 @profile
 def average_vectors():
