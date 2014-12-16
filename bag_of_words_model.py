@@ -6,6 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from KaggleWord2VecUtility import KaggleWord2VecUtility
 import pandas as pd
 import numpy as np
+import nltk.data
 
 def clean_review_function(review):
     list_of_words = KaggleWord2VecUtility.review_to_wordlist(review, remove_stopwords=False)
