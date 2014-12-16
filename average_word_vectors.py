@@ -7,6 +7,7 @@ from KaggleWord2VecUtility import KaggleWord2VecUtility
 import pandas as pd
 import numpy as np
 import itertools
+import nltk.data
 
 from memory_profiler import profile
 
