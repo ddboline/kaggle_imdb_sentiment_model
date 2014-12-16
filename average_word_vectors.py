@@ -18,14 +18,7 @@ tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 def clean_review_function(review):
     print review
     list_of_sentences = KaggleWord2VecUtility.review_to_sentences( review , tokenizer , remove_stopwords=False )
-    
-    def clean_review_sentence(revsent):
-        print revsent
-        list_of_words = KaggleWord2VecUtility.review_to_wordlist(revsent, remove_stopwords=False)
-        return ' '.join(list_of_words)
-    
-    new_list_of_sentences = map( clean_review_sentence , list_of_sentences )
-    return new_list_of_sentences
+    return list_of_sentences
 
 @profile
 def average_vectors():
