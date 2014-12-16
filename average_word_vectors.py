@@ -32,7 +32,7 @@ def average_vectors():
     print [ x['review'].size for x in [ labeledtrain_data , unlabeledtrain_data, test_data] ]
 
     sentences = map( clean_review_function , itertools.chain( labeledtrain_data['review'], unlabeledtrain_data['review'] ) )
-    
+    print len(sentences)
 
 if __name__ == '__main__':
     average_vectors()
