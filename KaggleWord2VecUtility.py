@@ -14,7 +14,7 @@ class KaggleWord2VecUtility(object):
     """KaggleWord2VecUtility is a utility class for processing raw HTML text into segments for further learning"""
 
     @staticmethod
-    def review_to_wordlist( review, remove_stopwords=False ):
+    def review_to_wordlist(review, remove_stopwords=False):
         # Function to convert a document to a sequence of words,
         # optionally removing stop words.  Returns a list of words.
         #
@@ -37,7 +37,7 @@ class KaggleWord2VecUtility(object):
 
     # Define a function to split a review into parsed sentences
     @staticmethod
-    def review_to_sentences( review, tokenizer, remove_stopwords=False ):
+    def review_to_sentences(review, tokenizer, remove_stopwords=False):
         # Function to split a review into parsed sentences. Returns a
         # list of sentences, where each sentence is a list of words
         #
@@ -50,8 +50,8 @@ class KaggleWord2VecUtility(object):
             # If a sentence is empty, skip it
             if len(raw_sentence) > 0:
                 # Otherwise, call review_to_wordlist to get a list of words
-                sentences.append( KaggleWord2VecUtility.review_to_wordlist( raw_sentence, \
-                  remove_stopwords ))
+                sentences.append(KaggleWord2VecUtility.review_to_wordlist(raw_sentence, \
+                  remove_stopwords))
         #
         # Return the list of sentences (each sentence is a list of words,
         # so this returns a list of lists
