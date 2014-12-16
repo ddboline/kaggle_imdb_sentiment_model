@@ -6,13 +6,15 @@ from sklearn.ensemble import RandomForestClassifier
 from KaggleWord2VecUtility import KaggleWord2VecUtility
 import pandas as pd
 import numpy as np
+from memory_profiler import profile
 
-if __name__ == '__main__':
+@profile
+def bag_of_words_model():
     labeledtrain_data = pd.read_csv('labeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
     #unlabeledtrain_data = pd.read_csv('unlabeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
     
     clean_labeledtrain_reviews = map( lambda r: ' '.join(KaggleWord2VecUtility.review_to_wordlist(r, remove_stopwords=False)) , labeledtrain_data['review'] )
-    
+
     vectorizer = CountVectorizer(analyzer = 'word', tokenizer = None,  preprocessor = None, stop_words = 'english', max_features = 1000)
 
     train_review_subset_x = clean_labeledtrain_reviews[::2]
@@ -31,3 +33,6 @@ if __name__ == '__main__':
     
     #test_data = pd.read_csv('testData.tsv', header=0, delimiter='\t', quoting=3)
     #clean_labeledtrain_reviews = map( lambda r: KaggleWord2VecUtility.review_to_wordlist(r, remove_stopwords=False) , test_data['review'] )
+
+if __name__ == '__main__':
+    bag_of_words_model()
