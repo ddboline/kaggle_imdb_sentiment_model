@@ -20,6 +20,7 @@ def clean_review_function(review):
     list_of_sentences = KaggleWord2VecUtility.review_to_sentences( review , tokenizer , remove_stopwords=False )
     
     def clean_review_sentence(revsent):
+        print revsent
         list_of_words = KaggleWord2VecUtility.review_to_wordlist(revsent, remove_stopwords=False)
         return ' '.join(list_of_words)
     
