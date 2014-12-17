@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 import itertools
 import nltk.data
+from gensim.models import Word2Vec
 
 from memory_profiler import profile
 
@@ -16,7 +17,6 @@ from memory_profiler import profile
 tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 def clean_review_function(review):
-    print review
     list_of_sentences = KaggleWord2VecUtility.review_to_sentences( review , tokenizer , remove_stopwords=False )
     return list_of_sentences
 
@@ -30,6 +30,22 @@ def average_vectors():
 
     sentences = map( clean_review_function , itertools.chain( labeledtrain_data['review'], unlabeledtrain_data['review'] ) )
     print len(sentences)
+
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+    
+    # Set values for various parameters
+    num_features = 300    # Word vector dimensionality
+    min_word_count = 40   # Minimum word count
+    num_workers = 4       # Number of threads to run in parallel
+    context = 10          # Context window size
+    downsampling = 1e-3   # Downsample setting for frequent words
+
+    # Initialize and train the model (this will take some time)
+    print "Training Word2Vec model..."
+    model = Word2Vec(sentences, workers=num_workers, \
+                size=num_features, min_count = min_word_count, \
+                window = context, sample = downsampling, seed=1)
+
 
 if __name__ == '__main__':
     average_vectors()
