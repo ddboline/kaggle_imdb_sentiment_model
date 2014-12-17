@@ -46,6 +46,7 @@ def average_vectors():
                 size=num_features, min_count = min_word_count, \
                 window = context, sample = downsampling, seed=1)
 
-
+    
+    
 if __name__ == '__main__':
     average_vectors()
