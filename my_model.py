@@ -22,7 +22,7 @@ def clean_review_function(review):
         #master_word_dict[word] += 1
     #return None
 
-def my_model():
+def my_model(nfeatures=100):
     #print help(pd.read_csv)
     
     labeledtrain_data = pd.read_csv('labeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
@@ -44,7 +44,7 @@ def my_model():
 
     print clean_labeledtrain_reviews.shape
 
-    vectorizer = CountVectorizer(analyzer = 'word', tokenizer = None,  preprocessor = None, stop_words = None, max_features = 5000)
+    vectorizer = CountVectorizer(analyzer = 'word', tokenizer = None,  preprocessor = None, stop_words = None, max_features = nfeatures)
 
     #print dir(vectorizer)
 
@@ -80,4 +80,10 @@ def my_model():
     output.to_csv('my_model.csv', index=False, quoting=3)
 
 if __name__ == '__main__':
-    my_model()
+    nfeatures = 100
+    for arg in os.sys.argv:
+        try:
+            nfeatures = int(arg)
+        except ValueError:
+            pass
+    my_model(nfeatures)
