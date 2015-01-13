@@ -22,11 +22,14 @@ def clean_review_function(review):
         #master_word_dict[word] += 1
     #return None
 
-def my_model(nfeatures=100):
+def my_model(nfeatures=100, run_test_data=False):
     #print help(pd.read_csv)
+    print 'nfeatures', nfeatures
     
     labeledtrain_data = pd.read_csv('labeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
     #unlabeledtrain_data = pd.read_csv('unlabeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
+
+    print 'labeledtrain_data.shape', labeledtrain_data.shape
 
     #labeledtrain_data['review'].apply(clean_review_function)
     #unlabeledtrain_data['review'].apply(clean_review_function)
@@ -64,20 +67,21 @@ def my_model(nfeatures=100):
 
     del train_review_subset_x, train_review_subset_y, test_review_subset_x, test_review_subset_y, test_data_features, train_data_features
 
-    train_data_features = vectorizer.fit_transform(clean_labeledtrain_reviews).toarray()
+    if run_test_data:
+        train_data_features = vectorizer.fit_transform(clean_labeledtrain_reviews).toarray()
 
-    forest = forest.fit(train_data_features, labeledtrain_data['sentiment'])
+        forest = forest.fit(train_data_features, labeledtrain_data['sentiment'])
 
-    test_data = pd.read_csv('testData.tsv', header=0, delimiter='\t', quoting=3)
+        test_data = pd.read_csv('testData.tsv', header=0, delimiter='\t', quoting=3)
 
-    clean_test_reviews = test_data['review'].apply(clean_review_function)
+        clean_test_reviews = test_data['review'].apply(clean_review_function)
 
-    test_data_features = vectorizer.transform(clean_test_reviews).toarray()
+        test_data_features = vectorizer.transform(clean_test_reviews).toarray()
 
-    result = forest.predict(test_data_features)
+        result = forest.predict(test_data_features)
 
-    output = pd.DataFrame(data={'id': test_data['id'], 'sentiment': result})
-    output.to_csv('my_model.csv', index=False, quoting=3)
+        output = pd.DataFrame(data={'id': test_data['id'], 'sentiment': result})
+        output.to_csv('my_model.csv', index=False, quoting=3)
 
 if __name__ == '__main__':
     nfeatures = 100
