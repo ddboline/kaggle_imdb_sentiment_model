@@ -50,27 +50,4 @@ def save_to_s3(bname, kname, fname):
 #     print help(ec2.run_instances)
 
 if __name__ == '__main__':
-    cmd = 'list'
-    COMMANDS = ['list', 'start', 'stop', 'create', 'help', 'terminate']
-    instid = 'i-43d874ae'
-    for arg in os.sys.argv:
-        if arg in ['h', 'help', '-h', '--help']:
-            print 'launch_ec2_instance.py <h|%s>' % '|'.join(COMMANDS)
-            exit(0)
-        elif arg in COMMANDS:
-            cmd = arg
-        else:
-            instid = arg
-
-    if cmd == 'list':
-        list_ec2_instances()
-    elif cmd == 'start':
-        start_ec2_instance(instid)
-    elif cmd == 'stop':
-        stop_ec2_instance(instid)
-    elif cmd == 'terminate':
-        terminate_ec2_instance(instid)
-    elif cmd == 'create':
-        create_ec2_instance(instid)
-    elif cmd == 'help':
-        help_ec2_instance()
+    save_to_s3('kaggle_imdb_sentiment_model_ddboline', 'temp_output_20150113205932.tar.gz')
