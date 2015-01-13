@@ -38,7 +38,7 @@ AMIIDS = ['ami-98aa1cf0', 'ami-344e3c5c']
 def save_to_s3(bname, kname, fname):
     s3 = boto.connect_s3(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
     with open(fname, 'r') as infile:
-        bucket = s3.create_bucket(bname)
+        bucket = s3.get_bucket(bname)
         k = boto.s3.key.Key(bucket)
         k.key = kname
         k.set_contents_from_file(infile)
@@ -50,4 +50,4 @@ def save_to_s3(bname, kname, fname):
 #     print help(ec2.run_instances)
 
 if __name__ == '__main__':
-    save_to_s3('kaggle_imdb_sentiment_model_ddboline', 'temp_output_20150113205932.tar.gz', 'temp_output_20150113205932.tar.gz')
+    save_to_s3('kaggle_imdb_sentiment_model_ddboline', 'temp_output_20150113202234.tar.gz', 'temp_output_20150113202234.tar.gz')
