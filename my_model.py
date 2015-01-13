@@ -24,6 +24,7 @@ def clean_review_function(review):
 
 def my_model(nfeatures=100):
     #print help(pd.read_csv)
+    print 'nfeatures', nfeatures
     
     labeledtrain_data = pd.read_csv('labeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
     #unlabeledtrain_data = pd.read_csv('unlabeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
