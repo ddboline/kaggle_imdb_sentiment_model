@@ -33,15 +33,16 @@ def read_keys():
 
 AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY = read_keys()
 
-AMIIDS = ['ami-98aa1cf0', 'ami-344e3c5c']
-
-def save_to_s3(bname, kname, fname):
+def save_to_s3(bname='kaggle_imdb_sentiment_model_ddboline', kname=None, fname=None):
+    if not kname or not fname:
+        return None
     s3 = boto.connect_s3(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
     with open(fname, 'r') as infile:
         bucket = s3.get_bucket(bname)
         k = boto.s3.key.Key(bucket)
         k.key = kname
         k.set_contents_from_file(infile)
+        return fname
 
 # def help_ec2_instance():
 #     #ec2 = boto.connect_ec2(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
