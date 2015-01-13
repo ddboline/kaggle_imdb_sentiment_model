@@ -44,12 +44,6 @@ def save_to_s3(bname='kaggle_imdb_sentiment_model_ddboline', kname=None, fname=N
         k.set_contents_from_file(infile)
         return fname
 
-# def help_ec2_instance():
-#     #ec2 = boto.connect_ec2(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-#     ec2 = boto.ec2.connect_to_region('us-east-1', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-#     #print '\n'.join(x for x in dir(ec2) if 'instance' in x)
-#     print help(ec2.run_instances)
-
 if __name__ == '__main__':
     fname = None
     for arg in os.sys.argv:
