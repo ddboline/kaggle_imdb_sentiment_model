@@ -50,4 +50,8 @@ def save_to_s3(bname, kname, fname):
 #     print help(ec2.run_instances)
 
 if __name__ == '__main__':
-    save_to_s3('kaggle_imdb_sentiment_model_ddboline', 'temp_output_20150113202234.tar.gz', 'temp_output_20150113202234.tar.gz')
+    fname = None
+    for arg in os.sys.argv:
+        if os.path.exists(arg):
+            fname = arg
+    save_to_s3('kaggle_imdb_sentiment_model_ddboline', fname, fname)
