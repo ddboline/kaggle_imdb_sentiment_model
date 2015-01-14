@@ -46,6 +46,22 @@ def average_vectors():
                 size=num_features, min_count = min_word_count, \
                 window = context, sample = downsampling, seed=1)
 
+    # If you don't plan to train the model any further, calling
+    # init_sims will make the model much more memory-efficient.
+    model.init_sims(replace=True)
+
+    # It can be helpful to create a meaningful model name and
+    # save the model for later use. You can load it later using Word2Vec.load()
+    model_name = "300features_40minwords_10context"
+    model.save(model_name)
+
+    model.doesnt_match("man woman child kitchen".split())
+    model.doesnt_match("france england germany berlin".split())
+    model.doesnt_match("paris berlin london austria".split())
+    model.most_similar("man")
+    model.most_similar("queen")
+    model.most_similar("awful")
+
     
     
 if __name__ == '__main__':
