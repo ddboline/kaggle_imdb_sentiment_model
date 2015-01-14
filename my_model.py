@@ -12,44 +12,19 @@ def clean_review_function(review):
     global master_word_dict, number_of_rows
     list_of_words = KaggleWord2VecUtility.review_to_wordlist(review, remove_stopwords=False)
     return ' '.join(list_of_words)
-    #return list_of_words
-    #number_of_rows += 1
-    #if number_of_rows % 1000 == 0:
-        #print 'Reviews processed:', number_of_rows
-    #for word in list_of_words:
-        #if word not in master_word_dict:
-            #master_word_dict[word] = 0
-        #master_word_dict[word] += 1
-    #return None
 
 def my_model(nfeatures=100, run_test_data=False):
-    #print help(pd.read_csv)
     print 'nfeatures', nfeatures
     
     labeledtrain_data = pd.read_csv('labeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
-    #unlabeledtrain_data = pd.read_csv('unlabeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
 
     print 'labeledtrain_data.shape', labeledtrain_data.shape
 
-    #labeledtrain_data['review'].apply(clean_review_function)
-    #unlabeledtrain_data['review'].apply(clean_review_function)
-    #with open('word_count.csv', 'w') as f:
-        #f.write('Word,Count\n')
-        #for word in sorted(master_word_dict):
-            #f.write('%s,%d\n' % (word, master_word_dict[word]))
-    #print clean_review_function(labeledtrain_data['review'].iloc[0])
-    #for row in labeledtrain_data['review']
-
-    #print labeledtrain_data['review'].apply(clean_review_function)
-
-    #clean_labeledtrain_reviews = map(clean_review_function, labeledtrain_data['review'])
     clean_labeledtrain_reviews = labeledtrain_data['review'].apply(clean_review_function)
 
     print clean_labeledtrain_reviews.shape
 
     vectorizer = CountVectorizer(analyzer = 'word', tokenizer = None,  preprocessor = None, stop_words = None, max_features = nfeatures)
-
-    #print dir(vectorizer)
 
     train_review_subset_x = clean_labeledtrain_reviews[::2]
     train_review_subset_y = labeledtrain_data['sentiment'][::2]
@@ -90,4 +65,4 @@ if __name__ == '__main__':
             nfeatures = int(arg)
         except ValueError:
             pass
-    my_model(nfeatures)
+    my_model(nfeatures, run_test_data=True)
