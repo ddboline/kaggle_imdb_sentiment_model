@@ -8,5 +8,5 @@ if [[ $- != *i* ]]; then
     return
 fi
 
-python -m nltk "nltk.download()"
-# python -c "import nltk; nltk.download()"
+# python -m nltk -c "nltk.download()"
+python -c "import nltk; nltk.download()"
