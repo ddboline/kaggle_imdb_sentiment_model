@@ -11,4 +11,4 @@ SETUP_SCRIPT="setup_cloud9.sh"
 
 cd /home/ubuntu/${GITHUB_DIR}
 sudo -u ubuntu git pull
-sudo -u ubuntu sh run_aws.sh
+sudo -u ubuntu sh run_aws.sh 2000
