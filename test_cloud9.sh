@@ -7,6 +7,6 @@ else
     N=$1
 fi
 
-time python my_model.py $N > temp.out 2> temp.err
+time python my_model.py # $N > temp.out 2> temp.err
 
 ssh ddboline@ddbolineathome.mooo.com "~/bin/send_to_gtalk imdb_sentiment_model_DONE"
