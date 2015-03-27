@@ -6,7 +6,7 @@ if [ -z $1 ]; then
 else
     N=$1
 fi
+
 time python my_model.py $N > temp.out 2> temp.err
-tar zcvf temp_output_${N}_${DATE}.tar.gz temp.out temp.err *.csv
-python save_to_s3.py temp_output_${N}_${DATE}.tar.gz
-sudo poweroff
+
+ssh ddboline@ddbolineathome.mooo.com "~/bin/send_to_gtalk imdb_sentiment_model_DONE"
