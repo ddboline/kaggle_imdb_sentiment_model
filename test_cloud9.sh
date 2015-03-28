@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./load_data.py
+./train_word2vec_model.py
 
 # time python my_model.py # $N > temp.out 2> temp.err
 
