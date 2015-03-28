@@ -30,7 +30,7 @@ def train_word2vec_model(do_plots=False):
     sentences = []
 
     pool = multiprocessing.Pool(4)
-    for rsent in pool.imap_unordered(review_to_sentences(review, tokenizer)):
+    for rsent in pool.imap_unordered(clean_review, review_list):
         sentences += rsent
     
     #traincleanreview = traindf['review'].apply(clean_review).tolist()
