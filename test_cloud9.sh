@@ -1,6 +1,6 @@
 #!/bin/bash
 
-time ./load_data.py
+./load_data.py
 
 # time python my_model.py # $N > temp.out 2> temp.err
 

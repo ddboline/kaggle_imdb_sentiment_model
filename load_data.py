@@ -6,6 +6,8 @@ import gzip
 import pandas as pd
 import numpy as np
 
+from KaggleWord2VecUtility import review_to_wordlist, review_to_sentences
+
 def load_data(do_plots=False):
     traindf = pd.read_csv('labeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     testdf = pd.read_csv('testData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
