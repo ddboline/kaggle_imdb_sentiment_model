@@ -26,12 +26,17 @@ def train_word2vec_model(do_plots=False):
     traindf = pd.read_csv('labeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     unlabeled_traindf = pd.read_csv('unlabeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     
-    traincleanreview = traindf['review'].apply(clean_review).tolist()
-    unlabeledcleanreview = unlabeled_traindf['review'].apply(clean_review).tolist()
+    review_list = traindf['review'].tolist() + unlabeled_traindf['review'].tolist()
+    sentences = []
+
+    pool = multiprocessing.Pool(4)
+    for rsent in pool.imap_unordered(review_to_sentences(review, tokenizer)):
+        sentences += rsent
     
-    sentences = traincleanreview + unlabeledcleanreview
-    
-    print type(sentences[0])
+    #traincleanreview = traindf['review'].apply(clean_review).tolist()
+    #unlabeledcleanreview = unlabeled_traindf['review'].apply(clean_review).tolist()    
+    #sentences = traincleanreview + unlabeledcleanreview    
+    #print type(sentences[0])
     
     # Set values for various parameters
     num_features = 300    # Word vector dimensionality
