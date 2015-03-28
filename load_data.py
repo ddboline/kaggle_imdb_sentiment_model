@@ -15,22 +15,24 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 from KaggleWord2VecUtility import review_to_wordlist, review_to_sentences
 
+from gensim.models import Word2Vec
+
 tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 def clean_review(review):
-    list_of_sentences = review_to_sentences(review, tokenizer, remove_stopwords=False)
-    return list_of_sentences
+    list_of_words = review_to_wordlist(review, remove_stopwords=False)
+    return ' '.join(list_of_words)
 
-def load_data_bagofwords(do_plots=False):
+def load_data(do_plots=False):
     traindf = pd.read_csv('labeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     testdf = pd.read_csv('testData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
-    unlabeled_traindf = pd.read_csv('unlabeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     
     traincleanreview = traindf['review'].apply(clean_review).tolist()
     testcleanreview = testdf['review'].apply(clean_review).tolist()
     unlabeledcleanreview = unlabeled_traindf['review'].apply(clean_review).tolist()
-    
-    sentences = traincleanreview + testcleanreview + unlabeledcleanreview
+
+    model_name = "300features_40minwords_10context"
+    model = Word2Vec.load(model_name)
     
     # Set values for various parameters
     num_features = 300    # Word vector dimensionality
