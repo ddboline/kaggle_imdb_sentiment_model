@@ -31,6 +31,8 @@ def train_word2vec_model(do_plots=False):
     
     sentences = traincleanreview + unlabeledcleanreview
     
+    print type(sentences[0])
+    
     # Set values for various parameters
     num_features = 300    # Word vector dimensionality
     min_word_count = 40   # Minimum word count
