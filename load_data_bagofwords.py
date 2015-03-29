@@ -22,11 +22,11 @@ def load_data_bagofwords(do_plots=False):
     testdf = pd.read_csv('testData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     #unlabeled_traindf = pd.read_csv('unlabeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     word_count_df = pd.read_csv('word_count.csv.gz', compression='gzip')
-    
-    cond0 = word_count_df['count']>500
-    cond1 = word_count_df['frac']>0.1
+
+    cond0 = word_count_df['count'] >500
+    cond1 = word_count_df['frac'] >0.1
     biased_word_list = {w: n for n, w in enumerate(list(word_count_df[cond0 & cond1]['word']))}
-    
+
     traincleanreview = traindf['review'].apply(clean_review)
     testcleanreview = testdf['review'].apply(clean_review)
     vectorizer = CountVectorizer(analyzer='word', vocabulary=biased_word_list)
@@ -35,7 +35,7 @@ def load_data_bagofwords(do_plots=False):
 
     #traindf['wvector'] = traindf['review'].apply(clean_review)
     #testdf['wvector'] = testdf['review'].apply(clean_review)
-    
+
     traindf = traindf.drop(labels=['review'], axis=1)
     testdf = testdf.drop(labels=['review'], axis=1)
 
@@ -47,7 +47,7 @@ def load_data_bagofwords(do_plots=False):
     ytrain = traindf['sentiment'].values
     xtest = testwvector
     ytest = testdf['id'].values
-    
+
     return xtrain, ytrain, xtest, ytest
 
 def load_data(do_plots=False):

@@ -17,7 +17,7 @@ from memory_profiler import profile
 tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 def clean_review_function(review):
-    list_of_sentences = KaggleWord2VecUtility.review_to_sentences( review , tokenizer , remove_stopwords=False )
+    list_of_sentences = KaggleWord2VecUtility.review_to_sentences(review, tokenizer, remove_stopwords=False)
     return list_of_sentences
 
 @profile
@@ -26,13 +26,13 @@ def average_vectors():
     unlabeledtrain_data = pd.read_csv('unlabeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
     test_data = pd.read_csv('testData.tsv', header=0, delimiter='\t', quoting=3)
 
-    print [ x['review'].size for x in [ labeledtrain_data , unlabeledtrain_data, test_data] ]
+    print [x['review'].size for x in [labeledtrain_data, unlabeledtrain_data, test_data]]
 
-    sentences = map( clean_review_function , itertools.chain( labeledtrain_data['review'], unlabeledtrain_data['review'] ) )
+    sentences = map(clean_review_function, itertools.chain(labeledtrain_data['review'], unlabeledtrain_data['review']))
     print len(sentences)
 
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-    
+    logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s', level=logging.INFO)
+
     # Set values for various parameters
     num_features = 300    # Word vector dimensionality
     min_word_count = 40   # Minimum word count
@@ -62,7 +62,7 @@ def average_vectors():
     model.most_similar("queen")
     model.most_similar("awful")
 
-    
-    
+
+
 if __name__ == '__main__':
     average_vectors()

@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 def score_model(model, xtrain, ytrain):
-    randint = reduce(lambda x,y: x|y, [ord(x)<<(n*8) for (n,x) in 
+    randint = reduce(lambda x,y: x|y, [ord(x)<<(n*8) for (n,x) in
                                        enumerate(os.urandom(4))])
     xTrain, xTest, yTrain, yTest = train_test_split(xtrain, ytrain,
                                                     test_size=0.4,
@@ -26,7 +26,7 @@ def score_model(model, xtrain, ytrain):
     return
 
 def prepare_submission(model, xtrain, ytrain, xtest, ytest):
-    
+
     model.fit(xtrain, ytrain)
     ytest_pred = model.predict(xtest)
 

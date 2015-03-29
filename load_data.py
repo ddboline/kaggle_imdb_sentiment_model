@@ -26,14 +26,14 @@ def clean_review(review):
 def load_data(do_plots=False):
     traindf = pd.read_csv('labeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     testdf = pd.read_csv('testData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
-    
+
     traincleanreview = traindf['review'].apply(clean_review).tolist()
     testcleanreview = testdf['review'].apply(clean_review).tolist()
     unlabeledcleanreview = unlabeled_traindf['review'].apply(clean_review).tolist()
 
     model_name = "300features_40minwords_10context"
     model = Word2Vec.load(model_name)
-    
+
     # Set values for various parameters
     num_features = 300    # Word vector dimensionality
     min_word_count = 40   # Minimum word count
@@ -50,14 +50,14 @@ def load_data(do_plots=False):
     # If you don't plan to train the model any further, calling
     # init_sims will make the model much more memory-efficient.
     model.init_sims(replace=True)
-    
+
     vectorizer = CountVectorizer(analyzer='word', vocabulary=biased_word_list)
     trainwvector = vectorizer.transform(traincleanreview).toarray()
     testwvector = vectorizer.transform(testcleanreview).toarray()
 
     #traindf['wvector'] = traindf['review'].apply(clean_review)
     #testdf['wvector'] = testdf['review'].apply(clean_review)
-    
+
     traindf = traindf.drop(labels=['review'], axis=1)
     testdf = testdf.drop(labels=['review'], axis=1)
 
@@ -69,7 +69,7 @@ def load_data(do_plots=False):
     ytrain = traindf['sentiment'].values
     xtest = testwvector
     ytest = testdf['id'].values
-    
+
     return xtrain, ytrain, xtest, ytest
 
 def load_data(do_plots=False):

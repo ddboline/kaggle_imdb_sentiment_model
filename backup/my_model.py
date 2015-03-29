@@ -15,7 +15,7 @@ def clean_review_function(review):
 
 def my_model(nfeatures=100, run_test_data=False):
     print 'nfeatures', nfeatures
-    
+
     labeledtrain_data = pd.read_csv('labeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
 
     print 'labeledtrain_data.shape', labeledtrain_data.shape

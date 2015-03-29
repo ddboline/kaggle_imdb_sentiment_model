@@ -12,13 +12,13 @@ import nltk.data
 tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 def clean_review_function(review):
-    list_of_sentences = KaggleWord2VecUtility.review_to_sentences( review , tokenizer , remove_stopwords=False )
+    list_of_sentences = KaggleWord2VecUtility.review_to_sentences(review, tokenizer, remove_stopwords=False)
     return list_of_sentences
 
 
 def my_model(nfeatures=100, run_test_data=False):
     print 'nfeatures', nfeatures
-    
+
     labeledtrain_data = pd.read_csv('labeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
     unlabeledtrain_data = pd.read_csv('unlabeledTrainData.tsv', header=0, delimiter='\t', quoting=3)
     test_data = pd.read_csv('testData.tsv', header=0, delimiter='\t', quoting=3)
@@ -28,7 +28,7 @@ def my_model(nfeatures=100, run_test_data=False):
     print 'test_data.shape', test_data.shape
 
     sentences = (pd.concat([labeledtrain_data['review'], unlabeledtrain_data['review']])).apply(clean_review_function)
-    
+
     print len(sentences)
 
     # Set values for various parameters

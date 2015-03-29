@@ -21,7 +21,7 @@ def generate_biased_word_list():
     word_count = defaultdict(int)
     good_words = defaultdict(int)
     bad_words = defaultdict(int)
-    
+
     pool = multiprocessing.Pool(2)
     idx = 0
     for idx, sentiment, list_of_words in pool.imap_unordered(process_row, traindf.iterrows()):
@@ -33,7 +33,7 @@ def generate_biased_word_list():
                 bad_words[word] += 1
             elif sentiment == 1:
                 good_words[word] += 1
-    
+
     with gzip.open('word_count.csv.gz', 'wb') as wcfile:
         wcfile.write('word,count,good,bad,frac\n')
         for w, c in sorted(word_count.items(), key=lambda x: x[1]):
