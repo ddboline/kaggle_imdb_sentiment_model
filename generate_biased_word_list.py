@@ -5,6 +5,8 @@ import csv
 import gzip
 import multiprocessing
 
+import pandas as pd
+
 from KaggleWord2VecUtility import review_to_wordlist, review_to_sentences
 
 def word_counting(inp):
