@@ -19,39 +19,72 @@ from gensim.models import Word2Vec
 
 tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
-def clean_review(review):
-    list_of_words = review_to_wordlist(review, remove_stopwords=False)
-    return ' '.join(list_of_words)
+def makeFeatureVec(words, model, num_features):
+    # Function to average all of the word vectors in a given
+    # paragraph
+    #
+    # Pre-initialize an empty numpy array (for speed)
+    featureVec = np.zeros((num_features,),dtype="float32")
+    #
+    nwords = 0.
+    #
+    # Index2word is a list that contains the names of the words in
+    # the model's vocabulary. Convert it to a set, for speed
+    index2word_set = set(model.index2word)
+    #
+    # Loop over each word in the review and, if it is in the model's
+    # vocaublary, add its feature vector to the total
+    for word in words:
+        if word in index2word_set:
+            nwords = nwords + 1.
+            featureVec = np.add(featureVec,model[word])
+    #
+    # Divide the result by the number of words to get the average
+    featureVec = np.divide(featureVec,nwords)
+    return featureVec
+
+def getAvgFeatureVecs(reviews, model, num_features):
+    # Given a set of reviews (each one a list of words), calculate
+    # the average feature vector for each one and return a 2D numpy array
+    #
+    # Initialize a counter
+    counter = 0.
+    #
+    # Preallocate a 2D numpy array, for speed
+    reviewFeatureVecs = np.zeros((len(reviews),num_features),dtype="float32")
+    #
+    # Loop through the reviews
+    for review in reviews:
+        #
+        # Print a status message every 1000th review
+        if counter%1000. == 0.:
+            print "Review %d of %d" % (counter, len(reviews))
+        #
+        # Call the function (defined above) that makes average feature vectors
+        reviewFeatureVecs[counter] = makeFeatureVec(review, model, \
+            num_features)
+        #
+        # Increment the counter
+        counter = counter + 1.
+    return reviewFeatureVecs
+
+
+def getCleanReviews(reviews):
+    clean_reviews = []
+    for review in reviews["review"]:
+        clean_reviews.append(KaggleWord2VecUtility.review_to_wordlist(review, remove_stopwords=True))
+    return clean_reviews
 
 def load_data(do_plots=False):
     traindf = pd.read_csv('labeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     testdf = pd.read_csv('testData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
 
-    traincleanreview = traindf['review'].apply(clean_review).tolist()
-    testcleanreview = testdf['review'].apply(clean_review).tolist()
-    unlabeledcleanreview = unlabeled_traindf['review'].apply(clean_review).tolist()
-
-    model_name = "300features_40minwords_10context"
+    model_name = "600features_20minwords_10context"
     model = Word2Vec.load(model_name)
 
-
-    vectorizer = CountVectorizer(analyzer='word', vocabulary=biased_word_list)
-    trainwvector = vectorizer.transform(traincleanreview).toarray()
-    testwvector = vectorizer.transform(testcleanreview).toarray()
-
-    #traindf['wvector'] = traindf['review'].apply(clean_review)
-    #testdf['wvector'] = testdf['review'].apply(clean_review)
-
-    traindf = traindf.drop(labels=['review'], axis=1)
-    testdf = testdf.drop(labels=['review'], axis=1)
-
-    print traindf.shape, testdf.shape
-    print traindf.columns
-    print testdf.columns
-
-    xtrain = trainwvector
+    xtrain = getAvgFeatureVecs(getCleanReviews(traindf), model, 600)
     ytrain = traindf['sentiment'].values
-    xtest = testwvector
+    xtest = getAvgFeatureVecs(getCleanReviews(testdf), model, 600)
     ytest = testdf['id'].values
 
     return xtrain, ytrain, xtest, ytest
