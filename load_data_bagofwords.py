@@ -23,8 +23,8 @@ def load_data_bagofwords(do_plots=False):
     #unlabeled_traindf = pd.read_csv('unlabeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     word_count_df = pd.read_csv('word_count.csv.gz', compression='gzip')
 
-    cond0 = word_count_df['count'] >500
-    cond1 = word_count_df['frac'] >0.1
+    cond0 = word_count_df['count'] > 500
+    cond1 = word_count_df['frac'] > 0.1
     biased_word_list = {w: n for n, w in enumerate(list(word_count_df[cond0 & cond1]['word']))}
 
     traincleanreview = traindf['review'].apply(clean_review)
