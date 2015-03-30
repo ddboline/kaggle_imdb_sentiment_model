@@ -5,8 +5,8 @@ import gzip
 
 import cPickle as pickle
 
-#from load_data import load_data
-from load_data_bagofwords import load_data
+from load_data import load_data
+#from load_data_bagofwords import load_data
 
 from sklearn.ensemble import RandomForestClassifier
 
