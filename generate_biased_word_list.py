@@ -4,6 +4,7 @@ import os
 import csv
 import gzip
 import multiprocessing
+from collections import defaultdict
 
 import pandas as pd
 
