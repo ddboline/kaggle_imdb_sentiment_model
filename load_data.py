@@ -72,7 +72,7 @@ def getAvgFeatureVecs(reviews, model, num_features):
 def getCleanReviews(reviews):
     clean_reviews = []
     for review in reviews["review"]:
-        clean_reviews.append(KaggleWord2VecUtility.review_to_wordlist(review, remove_stopwords=True))
+        clean_reviews.append(review_to_wordlist(review, remove_stopwords=True))
     return clean_reviews
 
 def load_data(do_plots=False):
