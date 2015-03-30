@@ -89,9 +89,6 @@ def load_data(do_plots=False):
 
     return xtrain, ytrain, xtest, ytest
 
-def load_data(do_plots=False):
-    return load_data_bagofwords(do_plots)
-
 if __name__ == '__main__':
     xtrain, ytrain, xtest, ytest = load_data(do_plots=True)
 
