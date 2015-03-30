@@ -17,7 +17,7 @@ def clean_review(review):
     list_of_words = review_to_wordlist(review, remove_stopwords=False)
     return ' '.join(list_of_words)
 
-def load_data_bagofwords(do_plots=False):
+def load_data(do_plots=False):
     traindf = pd.read_csv('labeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     testdf = pd.read_csv('testData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
     #unlabeled_traindf = pd.read_csv('unlabeledTrainData.tsv.gz', compression='gzip', delimiter='\t', header=0, quoting=3)
@@ -49,9 +49,6 @@ def load_data_bagofwords(do_plots=False):
     ytest = testdf['id'].values
 
     return xtrain, ytrain, xtest, ytest
-
-def load_data(do_plots=False):
-    return load_data_bagofwords(do_plots)
 
 if __name__ == '__main__':
     xtrain, ytrain, xtest, ytest = load_data(do_plots=True)
