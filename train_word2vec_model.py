@@ -39,8 +39,8 @@ def train_word2vec_model(do_plots=False):
     #print type(sentences[0])
 
     # Set values for various parameters
-    num_features = 300    # Word vector dimensionality
-    min_word_count = 40   # Minimum word count
+    num_features = 600    # Word vector dimensionality
+    min_word_count = 20   # Minimum word count
     num_workers = 4       # Number of threads to run in parallel
     context = 10          # Context window size
     downsampling = 1e-3   # Downsample setting for frequent words
